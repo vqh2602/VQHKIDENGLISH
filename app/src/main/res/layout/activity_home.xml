@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home_Activity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView_url_abc"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <TextView
+            android:id="@+id/textView_abc_vi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="  "
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView_abc"
+            app:layout_constraintStart_toStartOf="@+id/textView_abc"
+            app:layout_constraintTop_toBottomOf="@+id/textView_abc"
+            />
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next &#62;&#62;"
+            android:textColor="@color/teal_700"
+            android:background="@drawable/button_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_prev"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/button_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&#60;&#60; Prev"
+            android:textColor="@color/teal_700"
+            android:background="@drawable/button_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:backgroundTint="@null"/>
+
+        <TextView
+            android:id="@+id/textView_abc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Đang Tải Dữ Liệu . . ."
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView_url_abc"
+            app:layout_constraintStart_toStartOf="@+id/imageView_url_abc"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_url_abc" />
+
+        <ImageButton
+            android:id="@+id/imageButton_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/button_next"
+            app:layout_constraintEnd_toEndOf="@+id/textView_abc_vi"
+            app:layout_constraintStart_toStartOf="@+id/textView_abc_vi"
+            app:layout_constraintTop_toBottomOf="@+id/textView_abc_vi"
+            app:layout_constraintVertical_bias="0.53"
+            app:srcCompat="@drawable/voice_50px" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/imageButton_menu"
+        android:onClick="onClickmenu"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:background="@null"
+        android:backgroundTint="@null"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu_50px" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@drawable/home_bg"
+                tools:ignore="MissingConstraints">
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Top Khoá Học"
+                android:textColor="@android:color/background_dark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/discountedRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Tất Cả Khoá Học Phát Âm"
+                android:textColor="@android:color/background_dark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoryRecycler" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recently_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Tất Cả Khoá Học Nghe"
+                android:textColor="@android:color/background_dark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoryRecycler" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recently_listen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
