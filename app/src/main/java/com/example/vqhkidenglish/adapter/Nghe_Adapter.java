@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.vqhkidenglish.Home_Activity;
+import com.example.vqhkidenglish.Listen_Activity;
 import com.example.vqhkidenglish.R;
 import com.example.vqhkidenglish.model.Nghe;
-import com.example.vqhkidenglish.model.Phatam;
 
 import java.util.List;
 
@@ -58,22 +57,22 @@ public class Nghe_Adapter extends RecyclerView.Adapter<Nghe_Adapter.RecentlyView
 //                context.startActivity(i);
                 switch (position){
                     case 0:
-                        Intent intent = new Intent(context, Home_Activity.class);
+                        Intent intent = new Intent(context, Listen_Activity.class);
                         intent.putExtra("key","ABC");
                         context.startActivity(intent);
                         break;
                     case 1:
-                        Intent intent1 = new Intent(context,Home_Activity.class);
+                        Intent intent1 = new Intent(context,Listen_Activity.class);
                         intent1.putExtra("key","PET");
                         context.startActivity(intent1);
                         break;
                     case 2:
-                        Intent intent2 = new Intent(context,Home_Activity.class);
+                        Intent intent2 = new Intent(context,Listen_Activity.class);
                         intent2.putExtra("key","WILDANIMAL");
                         context.startActivity(intent2);
                         break;
                     case 3:
-                        Intent intent3 = new Intent(context,Home_Activity.class);
+                        Intent intent3 = new Intent(context,Listen_Activity.class);
                         intent3.putExtra("key","SEAANIMAL");
                         context.startActivity(intent3);
                         break;

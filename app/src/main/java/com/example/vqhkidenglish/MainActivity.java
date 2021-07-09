@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -20,14 +21,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
     Nghe_Adapter nghe_adapter;
     List<Nghe> ngheList;
 
-    FirebaseFirestore filestore;
-    Boolean checkuser = false;
+//    FirebaseFirestore filestore;
+//    int checkuser = 0;
+//    int xu =0;
+    String useremail ="",userimage="",username ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,73 +58,89 @@ public class MainActivity extends AppCompatActivity {
 
         discountRecyclerView = findViewById(R.id.discountedRecycler);
         recentlyViewedRecycler = findViewById(R.id.recently_item);
-        recently_listen = findViewById(R.id.recently_listen);
+        recently_listen = findViewById(R.id.recently_menu);
 
         Intent intent = getIntent();
         String userid = intent.getStringExtra("userid");
-        String useremail = intent.getStringExtra("useremail");
-        String userimage = intent.getStringExtra("userimage");
-
+        useremail = intent.getStringExtra("useremail");
+        userimage = intent.getStringExtra("userimage");
+        username = intent.getStringExtra("username");
+//        Log.d("Xu",userimage);
         //check user
-        filestore = FirebaseFirestore.getInstance();
-        CollectionReference reference = filestore.collection("User");
+//        filestore = FirebaseFirestore.getInstance();
+//        CollectionReference reference = filestore.collection("User");
 
-        checkuser(userid);
+//        checkuser(userid);
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+////                Log.d("Checkuser1", String.valueOf(checkuser));
+////                Log.d("Checkuser: ", String.valueOf(xu));
+//                adduser(userid,useremail);
+//            }
+//        },5500);
 
-        adduser(userid,useremail);
         addlist();
 
 
+
     }
 
-// check user
-    private void checkuser(String userid){
+//// check user
+//    private void checkuser(String userid){
+//
+//
+//        filestore.collection("user")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d("Checkuser: ", document.getId() + " => " + document.getData());
+//                                Log.d("Checkuser: ", document.get("userid").toString());
+//                                if(document.get("userid").toString().equals(userid) ){
+//                                    checkuser = 1;
+////                                    Log.d("Checkuser: ", "tìm thấy");
+//                                    xu = Integer.parseInt(document.get("xu").toString());
+//                                    break;
+//                                }
+//                                else {
+//                                    Log.d("Checkuser: ", "k tìm thấy");
+//                                }
+//                            }
+//                        } else {
+//                            Log.d("Checkuser: ", "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
+//    }
 
+//    private void adduser(String userid, String useremail){
+//        if(checkuser == 0){
+//            Map<String, Object> city = new HashMap<>();
+//            city.put("email", useremail);
+//            city.put("userid", userid);
+//            city.put("xu", 0);
+//
+//            filestore.collection("user").document(userid)
+//                    .set(city)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            Log.d("addnewusser:", "DocumentSnapshot successfully written!");
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.w("addnewusser:", "Error writing document", e);
+//                        }
+//                    });
+//        }
+//    }
 
-        filestore.collection("user")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Checkuser: ", document.getId() + " => " + document.getData());
-                                if(document.get("userid").toString() == userid){
-                                    checkuser = true;
-                                    Log.d("Checkuser: ", "tìm thấy");
-                                    break;
-                                }
-                            }
-                        } else {
-                            Log.d("Checkuser: ", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
-    private void adduser(String userid, String useremail){
-        if(checkuser == false){
-            Map<String, Object> city = new HashMap<>();
-            city.put("email", useremail);
-            city.put("userid", userid);
-            city.put("xu", 0);
-
-            filestore.collection("user").document(userid)
-                    .set(city)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("addnewusser:", "DocumentSnapshot successfully written!");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("addnewusser:", "Error writing document", e);
-                        }
-                    });
-        }
-    }
     private void addlist(){
 
     // adding data to model
@@ -182,6 +199,12 @@ public class MainActivity extends AppCompatActivity {
 
     //onclick menu
     public void onClickmenu(View v) {
-
+        Intent intent = new Intent(MainActivity.this, Menu_Activity.class);
+//        String xu1 = String.valueOf(xu);
+//        intent.putExtra("userxu",xu1);
+        intent.putExtra("useremail",useremail);
+        intent.putExtra("userimage",userimage);
+        intent.putExtra("username",username);
+        startActivity(intent);
     }
 }

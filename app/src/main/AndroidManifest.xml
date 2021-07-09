@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vqhkidenglish">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <queries>
-        ...
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
         </intent>
@@ -16,16 +17,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VQHKIDENGLISH">
-        <activity android:name=".Menu_Activity"></activity>
-        <activity android:name=".Home_Activity" />
-        <activity android:name=".Login_Activity">
+        <activity android:name=".Splash_Screen_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".exten.Windy_Activity" />
+        <activity android:name=".Menu_Activity" />
+        <activity android:name=".Listen_Activity" />
+        <activity android:name=".Phatam_Activity" />
+        <activity android:name=".Login_Activity" />
+        <activity android:name=".MainActivity">
+
+        </activity>
     </application>
 
 </manifest>

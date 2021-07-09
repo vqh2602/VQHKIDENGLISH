@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageButton
-        android:id="@+id/imageButton_menu"
-        android:onClick="onClickmenu"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:background="@null"
-        android:backgroundTint="@null"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/menu_50px" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,7 +29,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textView_xu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -100,7 +89,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/categoryRecycler" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recently_listen"
+                android:id="@+id/recently_menu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
@@ -110,5 +99,17 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/imageButton_menu"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:background="@null"
+        android:backgroundTint="@null"
+        android:onClick="onClickmenu"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu_50px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

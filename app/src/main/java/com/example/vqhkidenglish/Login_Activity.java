@@ -113,7 +113,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
                             intent.putExtra("userid",user.getUid());
                             intent.putExtra("useremail",user.getEmail());
-                            intent.putExtra("userimage",user.getPhotoUrl());
+                            intent.putExtra("userimage",user.getPhotoUrl().toString());
+                            intent.putExtra("username",user.getDisplayName());
                             startActivity(intent);
                             finish();
 //                            updateUI(user);
@@ -125,6 +126,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
     }
+
+
     @Override
     public void onStart() {
         super.onStart();

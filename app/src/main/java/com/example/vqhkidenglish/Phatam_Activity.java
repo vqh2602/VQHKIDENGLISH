@@ -1,9 +1,11 @@
 package com.example.vqhkidenglish;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,15 +14,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.vqhkidenglish.data.abc_data;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +35,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class Home_Activity extends AppCompatActivity {
+public class Phatam_Activity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     ArrayList<abc_data> listabc_data ;
     ImageView imageView_url_abc;
@@ -42,12 +43,15 @@ public class Home_Activity extends AppCompatActivity {
     Button button_next,button_prev;
     ImageButton imageButton_voice;
     TextToSpeech textToSpeech;
+//    ProgressBar progressBar;
+    Activity mActivity;
+    LottieAnimationView animationView;
 
     int check =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_phatam);
         anhxa();
 
         Intent intent = getIntent();
@@ -64,11 +68,8 @@ public class Home_Activity extends AppCompatActivity {
                     // TODO: handle the post
                     abc_data abcData = postSnapshot.getValue(abc_data.class);
 //                    Log.d("Data_abc_string", abcData.getUrl());
-
                     listabc_data.add(abcData);
                     Log.d("Data_abc_list", String.valueOf(listabc_data.size()));
-
-
                 }
             }
 
@@ -96,13 +97,26 @@ public class Home_Activity extends AppCompatActivity {
 //                    }
 //                });
 
+                hide_view();
                 setvoice();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 //                Log.d("Data_abc_list", String.valueOf(listabc_data.size()));
 
                 setdulieu();
+                if(listabc_data.size() != 0){
+//                    progressBar.setVisibility(View.GONE);
+                    animationView.setVisibility(View.GONE);
+                    show_view();
+                }
+                else {
+//                    progressBar.setVisibility(View.VISIBLE);
+                    animationView.setVisibility(View.VISIBLE);
+                    thongbao();
+                    hide_view();
+                }
 
             }
         },5500);
@@ -120,6 +134,8 @@ private void  anhxa(){
    button_next = findViewById(R.id.button_next);
    button_prev = findViewById(R.id.button_prev);
     imageButton_voice = findViewById(R.id.imageButton_voice);
+//    progressBar = findViewById(R.id.progressBar);
+    animationView = findViewById(R.id.animationView);
 }
 
 
@@ -225,6 +241,52 @@ private void  anhxa(){
                 }
             }
         });
+
+    }
+
+    // thông báo
+    private void thongbao(){
+        //Tạo đối tượng
+        mActivity = Phatam_Activity.this;
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+//Thiết lập tiêu đề
+        b.setTitle("Xác nhận");
+        b.setMessage("Tốc độ mạng không ổn định, bạn có muốn tải lại dữ liệu?");
+// Nút Ok
+        b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mActivity.recreate();
+//                finish();
+            }
+        });
+//Nút Cancel
+        b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+//Tạo dialog
+        AlertDialog al = b.create();
+//Hiển thị
+        al.show();
+    }
+    //show
+    private void hide_view(){
+        imageView_url_abc.setVisibility(View.GONE);
+        textView_abc_vi.setVisibility(View.GONE);
+        textView_abc.setVisibility(View.GONE);
+        button_next.setVisibility(View.GONE);
+        button_prev.setVisibility(View.GONE);
+        imageButton_voice.setVisibility(View.GONE);
+
+    }
+    private void show_view(){
+        imageView_url_abc.setVisibility(View.VISIBLE);
+        textView_abc_vi.setVisibility(View.VISIBLE);
+        textView_abc.setVisibility(View.VISIBLE);
+        button_next.setVisibility(View.VISIBLE);
+        button_prev.setVisibility(View.VISIBLE);
+        imageButton_voice.setVisibility(View.VISIBLE);
 
     }
 }
