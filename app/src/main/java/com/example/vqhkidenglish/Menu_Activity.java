@@ -22,6 +22,9 @@ import com.example.vqhkidenglish.model.Menu;
 import com.example.vqhkidenglish.model.Nghe;
 import com.example.vqhkidenglish.model.Phatam;
 import com.example.vqhkidenglish.model.Top;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -40,6 +43,7 @@ import static com.example.vqhkidenglish.R.drawable.cv2;
 import static com.example.vqhkidenglish.R.drawable.cv3;
 import static com.example.vqhkidenglish.R.drawable.cv4;
 import static com.example.vqhkidenglish.R.drawable.cv5;
+import static com.example.vqhkidenglish.R.drawable.info_480px;
 import static com.example.vqhkidenglish.R.drawable.menu_50px;
 import static com.example.vqhkidenglish.R.drawable.ocean;
 import static com.example.vqhkidenglish.R.drawable.pet;
@@ -65,6 +69,10 @@ public class Menu_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
+
+
 
         recently_menu = findViewById(R.id.recently_menu);
         addlist();
@@ -111,7 +119,7 @@ public class Menu_Activity extends AppCompatActivity {
 //        menuList.add(new Menu("Sea Animal","động vật biển", cv5,menu_50px));
 //        menuList.add(new Menu("Sea Animal","động vật biển", cv5,menu_50px));
         menuList.add(new Menu("Xây Dựng Toà Tháp","Tower Building Game", cv1,building_construction_256px));
-        menuList.add(new Menu("Thông Tin Ứng Dụng","About", cv2,menu_50px));
+        menuList.add(new Menu("Thông Tin Ứng Dụng","About", cv2,info_480px));
 
         setDiscountedRecycler(menuList);
 

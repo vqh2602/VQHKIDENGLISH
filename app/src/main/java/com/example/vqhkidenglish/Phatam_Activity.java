@@ -23,6 +23,15 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.vqhkidenglish.data.abc_data;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +55,7 @@ public class Phatam_Activity extends AppCompatActivity {
 //    ProgressBar progressBar;
     Activity mActivity;
     LottieAnimationView animationView;
+    private InterstitialAd mInterstitialAd;
 
     int check =0;
     @Override
@@ -53,6 +63,7 @@ public class Phatam_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phatam);
         anhxa();
+        loadad();
 
         Intent intent = getIntent();
 
@@ -105,11 +116,13 @@ public class Phatam_Activity extends AppCompatActivity {
             public void run() {
 //                Log.d("Data_abc_list", String.valueOf(listabc_data.size()));
 
-                setdulieu();
+
                 if(listabc_data.size() != 0){
 //                    progressBar.setVisibility(View.GONE);
                     animationView.setVisibility(View.GONE);
                     show_view();
+                    setdulieu();
+                    showad();
                 }
                 else {
 //                    progressBar.setVisibility(View.VISIBLE);
@@ -250,7 +263,7 @@ private void  anhxa(){
         mActivity = Phatam_Activity.this;
         AlertDialog.Builder b = new AlertDialog.Builder(this);
 //Thiết lập tiêu đề
-        b.setTitle("Xác nhận");
+        b.setTitle("Không thể tải dữ liệu");
         b.setMessage("Tốc độ mạng không ổn định, bạn có muốn tải lại dữ liệu?");
 // Nút Ok
         b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
@@ -262,7 +275,9 @@ private void  anhxa(){
 //Nút Cancel
         b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+
+//                dialog.cancel();
+                finish();
             }
         });
 //Tạo dialog
@@ -288,5 +303,67 @@ private void  anhxa(){
         button_prev.setVisibility(View.VISIBLE);
         imageButton_voice.setVisibility(View.VISIBLE);
 
+    }
+
+    //load quảng cáo
+    private void loadad(){
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+//        ca-app-pub-5964552069889646/1538183771
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Called when fullscreen content is dismissed.
+                                Log.d("TAG11", "The ad was dismissed.");
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Called when fullscreen content failed to show.
+                                Log.d("TAG11", "The ad failed to show.");
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Called when fullscreen content is shown.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                mInterstitialAd = null;
+                                Log.d("TAG11", "The ad was shown.");
+                            }
+                        });
+                        Log.i("ad11", "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i("ad11", loadAdError.getMessage());
+                        mInterstitialAd = null;
+                    }
+                });
+
+
+
+
+    }
+    // hiện ad
+    private void showad(){
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(Phatam_Activity.this);
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+        }
     }
 }

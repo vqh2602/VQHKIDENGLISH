@@ -21,8 +21,8 @@ public class Windy_Activity extends AppCompatActivity {
 
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading Data...");
-        progressDialog.setCancelable(false);
+//        progressDialog.setMessage("Loading Data...");
+//        progressDialog.setCancelable(false);
 
         webview_map = (WebView) findViewById(R.id.webview_map);
 
@@ -41,6 +41,8 @@ public class Windy_Activity extends AppCompatActivity {
         webview_map.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress < 100) {
+                    progressDialog.setMessage("Loading Data: "+progress +" %");
+                    progressDialog.setCancelable(false);
                     progressDialog.show();
                 }
                 if (progress == 100) {
@@ -57,6 +59,12 @@ public class Windy_Activity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        finish();
+    }
 
     @Override
     protected void onDestroy() {

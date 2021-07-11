@@ -12,9 +12,11 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.vqhkidenglish.data.abc_data;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +57,11 @@ public class Listen_Activity extends AppCompatActivity implements View.OnClickLi
     TextToSpeech textToSpeech;
 //    ProgressBar progressBar;
     Activity mActivity;
+    Switch switch_hidetext;
 LottieAnimationView animationView;
+
+    private InterstitialAd mInterstitialAd;
+
 
     int checkdapan =0;
     @Override
@@ -54,6 +69,11 @@ LottieAnimationView animationView;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listen);
         anhxa();
+
+        //tải quang cáo
+        loadad();
+
+
 
         Intent intent = getIntent();
 
@@ -109,12 +129,14 @@ LottieAnimationView animationView;
             public void run() {
                 Log.d("Data_abc_list", String.valueOf(listabc_data.size()));
 
-                setdulieu();
+
 
                 if(listabc_data.size() != 0){
 //                    progressBar.setVisibility(View.GONE);
                     animationView.setVisibility(View.GONE);
                     show_view();
+                    setdulieu();
+                    showad();
                 }
                 else {
 //                    progressBar.setVisibility(View.VISIBLE);
@@ -128,6 +150,21 @@ LottieAnimationView animationView;
             }
         },5500);
 
+        switch_hidetext.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton,
+                                                 boolean b) {
+                        if(switch_hidetext.isChecked() ) {
+                            textView_abc_vi.setVisibility(View.GONE);
+                            textView_abc.setVisibility(View.GONE);
+                        }
+                        else {
+                            textView_abc_vi.setVisibility(View.VISIBLE);
+                            textView_abc.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
 
 
     }
@@ -146,6 +183,7 @@ private void  anhxa(){
 
     animationView = findViewById(R.id.animationView);
 //    progressBar = findViewById(R.id.progressBar);
+    switch_hidetext = findViewById(R.id.switch_hidetext);
 
     imageView_url_aw1.setOnClickListener(this);
     imageView_url_aw2.setOnClickListener(this);
@@ -203,6 +241,8 @@ private void  anhxa(){
             public void onClick(View view) {
                 textToSpeech.setSpeechRate(0.5f);
                 textToSpeech.speak(s,TextToSpeech.QUEUE_FLUSH,null,null);
+
+
             }
         });
     }
@@ -448,7 +488,7 @@ private void  anhxa(){
         mActivity = Listen_Activity.this;
         AlertDialog.Builder b = new AlertDialog.Builder(this);
 //Thiết lập tiêu đề
-        b.setTitle("Xác nhận");
+        b.setTitle("Không thể tải dữ liệu");
         b.setMessage("Tốc độ mạng không ổn định, bạn có muốn tải lại dữ liệu?");
 // Nút Ok
         b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
@@ -460,7 +500,9 @@ private void  anhxa(){
 //Nút Cancel
         b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+
+//                dialog.cancel();
+                finish();
             }
         });
 //Tạo dialog
@@ -479,6 +521,8 @@ private void  anhxa(){
         textView_abc_vi.setVisibility(View.GONE);
         textView_abc.setVisibility(View.GONE);
         imageButton_voice.setVisibility(View.GONE);
+
+        switch_hidetext.setVisibility(View.GONE);
     }
     private void show_view(){
         imageView_url_aw1.setVisibility(View.VISIBLE);
@@ -489,5 +533,69 @@ private void  anhxa(){
         textView_abc_vi.setVisibility(View.VISIBLE);
         textView_abc.setVisibility(View.VISIBLE);
         imageButton_voice.setVisibility(View.VISIBLE);
+
+        switch_hidetext.setVisibility(View.VISIBLE);
+    }
+
+    //load quảng cáo
+    private void loadad(){
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+//
+//        ca-app-pub-5964552069889646/1538183771
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Called when fullscreen content is dismissed.
+                                Log.d("TAG11", "The ad was dismissed.");
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Called when fullscreen content failed to show.
+                                Log.d("TAG11", "The ad failed to show.");
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Called when fullscreen content is shown.
+                                // Make sure to set your reference to null so you don't
+                                // show it a second time.
+                                mInterstitialAd = null;
+                                Log.d("TAG11", "The ad was shown.");
+                            }
+                        });
+                        Log.i("ad11", "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i("ad11", loadAdError.getMessage());
+                        mInterstitialAd = null;
+                    }
+                });
+
+
+
+
+    }
+    // hiện ad
+    private void showad(){
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(Listen_Activity.this);
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+        }
     }
 }

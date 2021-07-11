@@ -1,15 +1,22 @@
 package com.example.vqhkidenglish;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.vqhkidenglish.adapter.Nghe_Adapter;
 import com.example.vqhkidenglish.adapter.Top_Adapter;
@@ -17,6 +24,11 @@ import com.example.vqhkidenglish.adapter.Phatam_Adapter;
 import com.example.vqhkidenglish.model.Nghe;
 import com.example.vqhkidenglish.model.Top;
 import com.example.vqhkidenglish.model.Phatam;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     Nghe_Adapter nghe_adapter;
     List<Nghe> ngheList;
 
+    Activity mActivity;
+    AdView mAdView;
 //    FirebaseFirestore filestore;
 //    int checkuser = 0;
 //    int xu =0;
@@ -55,6 +69,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //khởi tạo quảng cáo
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
+
+
 
         discountRecyclerView = findViewById(R.id.discountedRecycler);
         recentlyViewedRecycler = findViewById(R.id.recently_item);
@@ -81,9 +108,14 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        },5500);
 
-        addlist();
 
-
+//check internet
+        if (isConnected()) {
+            addlist();
+        } else {
+//            Toast.makeText(getApplicationContext(), "No Internet Connection \n Không có kết nối mạng", Toast.LENGTH_SHORT).show();
+            thongbao();
+        }
 
     }
 
@@ -206,5 +238,48 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("userimage",userimage);
         intent.putExtra("username",username);
         startActivity(intent);
+    }
+
+    //check internet
+
+public boolean isConnected() {
+        boolean connected = false;
+        try {
+        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo nInfo = cm.getActiveNetworkInfo();
+        connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+        return connected;
+        } catch (Exception e) {
+        Log.e("Connectivity Exception", e.getMessage());
+        }
+        return connected;
+        }
+
+    // thông báo
+    private void thongbao(){
+        //Tạo đối tượng
+        mActivity = MainActivity.this;
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+//Thiết lập tiêu đề
+        b.setTitle("Không có kết nối mạng");
+        b.setMessage("Chưa bật kết nối mạng \n Hãy bật kết wifi, dữ liệu di động sau đó click kết nối lại");
+// Nút Ok
+        b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mActivity.recreate();
+//                finish();
+            }
+        });
+//Nút Cancel
+        b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+//                dialog.cancel();
+                finish();
+            }
+        });
+//Tạo dialog
+        AlertDialog al = b.create();
+//Hiển thị
+        al.show();
     }
 }

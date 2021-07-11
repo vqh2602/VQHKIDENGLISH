@@ -59,6 +59,7 @@ public class Nghe_Adapter extends RecyclerView.Adapter<Nghe_Adapter.RecentlyView
                     case 0:
                         Intent intent = new Intent(context, Listen_Activity.class);
                         intent.putExtra("key","ABC");
+
                         context.startActivity(intent);
                         break;
                     case 1:
