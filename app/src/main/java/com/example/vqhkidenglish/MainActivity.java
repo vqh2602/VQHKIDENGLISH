@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 //    int checkuser = 0;
 //    int xu =0;
     String useremail ="",userimage="",username ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -238,6 +240,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("userimage",userimage);
         intent.putExtra("username",username);
         startActivity(intent);
+        overridePendingTransition(R.anim.in_left,R.anim.out_left);
+
     }
 
     //check internet

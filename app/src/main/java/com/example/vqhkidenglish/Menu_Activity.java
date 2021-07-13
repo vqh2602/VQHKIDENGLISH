@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.vqhkidenglish.adapter.Menu_Adapter;
 import com.example.vqhkidenglish.adapter.Top_Adapter;
 import com.example.vqhkidenglish.model.Menu;
@@ -169,6 +170,13 @@ private  void anhxa(){
         Intent intent = new Intent(Menu_Activity.this, Login_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.in_right,R.anim.out_right);
+
     }
 
 }

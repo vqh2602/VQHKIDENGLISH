@@ -3,8 +3,11 @@ package com.example.vqhkidenglish;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,6 +46,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -59,6 +63,7 @@ public class Listen_Activity extends AppCompatActivity implements View.OnClickLi
     Activity mActivity;
     Switch switch_hidetext;
 LottieAnimationView animationView;
+    MediaPlayer mediaPlayer;
 
     private InterstitialAd mInterstitialAd;
 
@@ -122,7 +127,7 @@ LottieAnimationView animationView;
 //                });
 
         hide_view();
-                setvoice();
+//                setvoice();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -236,15 +241,72 @@ private void  anhxa(){
 
     //voice
     private void playvoice(String s){
+        String audioUrl = "https://docs.google.com/uc?export=open&id=" + s;
+        // initializing media player
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer = new MediaPlayer();
+        Resources res = getResources();
+        int sound = res.getIdentifier(s, "raw", getPackageName());
+
+        //Play music
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), sound);
+        mediaPlayer.start();
+//
+//        // below line is use to set the audio
+//        // stream type for our media player.
+//        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//
+//        // below line is use to set our
+//        // url to our media player.
+//        try {
+//            mediaPlayer.setDataSource(audioUrl);
+//            // below line is use to prepare
+//            // and start our media player.
+//            mediaPlayer.prepare();
+//            mediaPlayer.start();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         imageButton_voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textToSpeech.setSpeechRate(0.5f);
-                textToSpeech.speak(s,TextToSpeech.QUEUE_FLUSH,null,null);
+                mediaPlayer.start();
+//                textToSpeech.setSpeechRate(0.5f);
+//                textToSpeech.speak(s,TextToSpeech.QUEUE_FLUSH,null,null);
 
-
+//
+//                // initializing media player
+//                mediaPlayer = new MediaPlayer();
+//
+//                // below line is use to set the audio
+//                // stream type for our media player.
+//                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//
+//                // below line is use to set our
+//                // url to our media player.
+//                try {
+//                    mediaPlayer.setDataSource(audioUrl);
+//                    // below line is use to prepare
+//                    // and start our media player.
+//                    mediaPlayer.prepare();
+//                    mediaPlayer.start();
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
+//        imageButton_voice.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                textToSpeech.setSpeechRate(0.5f);
+//                textToSpeech.speak(s,TextToSpeech.QUEUE_FLUSH,null,null);
+//
+//
+//            }
+//        });
     }
     // next
 //    private void next(int x){
@@ -286,9 +348,9 @@ private void  anhxa(){
         new DownloadImageFromInternet((ImageView) findViewById(R.id.imageView_url_abc)).execute(listabc_data.get(i).getUrl());
         textView_abc.setText(listabc_data.get(i).getName());
         textView_abc_vi.setText(listabc_data.get(i).getVi());
-        textToSpeech.setSpeechRate((float) 0.2);
-        textToSpeech.speak(listabc_data.get(i).getName(),TextToSpeech.QUEUE_FLUSH,null,null);
-        playvoice(listabc_data.get(i).getName());
+//        textToSpeech.setSpeechRate((float) 0.2);
+//        textToSpeech.speak(listabc_data.get(i).getName(),TextToSpeech.QUEUE_FLUSH,null,null);
+        playvoice(listabc_data.get(i).getVoice());
 
     }
 
@@ -296,9 +358,9 @@ private void  anhxa(){
     private void initaws(int aws, int x){
         textView_abc.setText(listabc_data.get(aws).getName());
         textView_abc_vi.setText(listabc_data.get(aws).getVi());
-        textToSpeech.setSpeechRate(0.5f);
-        textToSpeech.speak(listabc_data.get(aws).getName(),TextToSpeech.QUEUE_FLUSH,null,null);
-        playvoice(listabc_data.get(aws).getName());
+//        textToSpeech.setSpeechRate(0.5f);
+//        textToSpeech.speak(listabc_data.get(aws).getName(),TextToSpeech.QUEUE_FLUSH,null,null);
+        playvoice(listabc_data.get(aws).getVoice());
         flaseaws(aws,x);
     }
     //khởi tạo random câu hỏi sai
@@ -469,18 +531,18 @@ private void  anhxa(){
         }
     }
 
-    //set voice
-    private void setvoice(){
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if(i == TextToSpeech.SUCCESS){
-                    int lang = textToSpeech.setLanguage(Locale.ENGLISH);
-                }
-            }
-        });
-
-    }
+//    //set voice
+//    private void setvoice(){
+//        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int i) {
+//                if(i == TextToSpeech.SUCCESS){
+//                    int lang = textToSpeech.setLanguage(Locale.ENGLISH);
+//                }
+//            }
+//        });
+//
+//    }
 
     // thông báo
     private void thongbao(){
