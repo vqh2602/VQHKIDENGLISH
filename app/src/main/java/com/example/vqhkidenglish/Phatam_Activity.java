@@ -183,7 +183,9 @@ private void  anhxa(){
 
         //Play music
         mediaPlayer = MediaPlayer.create(getApplicationContext(), sound);
-        mediaPlayer.setPlaybackParams(new PlaybackParams().setSpeed(0.5f));
+
+        mediaPlayer.setPlaybackParams(new PlaybackParams().setSpeed(0.7f));
+        mediaPlayer.seekTo(0);
         mediaPlayer.start();
 //
 //        // below line is use to set the audio
@@ -229,6 +231,7 @@ private void  anhxa(){
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
+                mediaPlayer.seekTo(0);
                 mediaPlayer.start();
             }
         });

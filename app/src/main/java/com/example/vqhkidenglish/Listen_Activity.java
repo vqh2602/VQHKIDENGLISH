@@ -63,7 +63,7 @@ public class Listen_Activity extends AppCompatActivity implements View.OnClickLi
     Activity mActivity;
     Switch switch_hidetext;
 LottieAnimationView animationView;
-    MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer,mtrue,mflase;
 
     private InterstitialAd mInterstitialAd;
 
@@ -244,12 +244,12 @@ private void  anhxa(){
         String audioUrl = "https://docs.google.com/uc?export=open&id=" + s;
         // initializing media player
         mediaPlayer = new MediaPlayer();
-        mediaPlayer = new MediaPlayer();
         Resources res = getResources();
         int sound = res.getIdentifier(s, "raw", getPackageName());
 
         //Play music
         mediaPlayer = MediaPlayer.create(getApplicationContext(), sound);
+        mediaPlayer.seekTo(0);
         mediaPlayer.start();
 //
 //        // below line is use to set the audio
@@ -272,6 +272,7 @@ private void  anhxa(){
         imageButton_voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mediaPlayer.seekTo(0);
                 mediaPlayer.start();
 //                textToSpeech.setSpeechRate(0.5f);
 //                textToSpeech.speak(s,TextToSpeech.QUEUE_FLUSH,null,null);
@@ -407,13 +408,20 @@ private void  anhxa(){
 
     }
 
+    //click chọn đáp án
     @Override
     public void onClick(View view) {
+        mtrue = new MediaPlayer();
+        mflase = new MediaPlayer();
+        mtrue = MediaPlayer.create(this,R.raw.dung);
+        mflase =  MediaPlayer.create(this,R.raw.sai);
         switch (view.getId()){
             case R.id.imageView_url_aw1:
 //                Toast.makeText(Listen_Activity.this,"test",Toast.LENGTH_LONG).show();
                 if(checkdapan==1){
                     imageView_url_aw1.setBackgroundResource(R.color.truecloler);
+                    mtrue.seekTo(0);
+                    mtrue.start();
                     new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -425,6 +433,8 @@ private void  anhxa(){
                 }
                 else {
                     imageView_url_aw1.setBackgroundResource(R.color.flasecolor);
+                    mflase.seekTo(0);
+                    mflase.start();
                      new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -438,6 +448,8 @@ private void  anhxa(){
                 if(checkdapan==2){
 
                     imageView_url_aw2.setBackgroundResource(R.color.truecloler);
+                    mtrue.seekTo(0);
+                    mtrue.start();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -449,6 +461,8 @@ private void  anhxa(){
                 }
                 else {
                     imageView_url_aw2.setBackgroundResource(R.color.flasecolor);
+                    mflase.seekTo(0);
+                    mflase.start();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -461,6 +475,8 @@ private void  anhxa(){
 //                Toast.makeText(Listen_Activity.this,"test",Toast.LENGTH_LONG).show();
                 if(checkdapan==3){
                     imageView_url_aw3.setBackgroundResource(R.color.truecloler);
+                    mtrue.seekTo(0);
+                    mtrue.start();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -472,6 +488,8 @@ private void  anhxa(){
                 }
                 else {
                     imageView_url_aw3.setBackgroundResource(R.color.flasecolor);
+                    mflase.seekTo(0);
+                    mflase.start();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -484,6 +502,8 @@ private void  anhxa(){
 //                Toast.makeText(Listen_Activity.this,"test",Toast.LENGTH_LONG).show();
                 if(checkdapan==4){
                     imageView_url_aw4.setBackgroundResource(R.color.truecloler);
+                    mtrue.seekTo(0);
+                    mtrue.start();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -495,6 +515,8 @@ private void  anhxa(){
                 }
                 else {
                     imageView_url_aw4.setBackgroundResource(R.color.flasecolor);
+                    mflase.seekTo(0);
+                    mflase.start();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
