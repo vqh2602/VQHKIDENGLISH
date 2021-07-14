@@ -49,6 +49,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Random;
 
@@ -60,6 +61,8 @@ public class Listen_Activity extends AppCompatActivity implements View.OnClickLi
     ImageButton imageButton_voice;
     TextToSpeech textToSpeech;
 //    ProgressBar progressBar;
+private int CurrentProgress = 0;
+    private ProgressBar progressBar;
     Activity mActivity;
     Switch switch_hidetext;
 LottieAnimationView animationView;
@@ -69,6 +72,7 @@ LottieAnimationView animationView;
 
 
     int checkdapan =0;
+    int sttcauhoi=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,8 +137,8 @@ LottieAnimationView animationView;
             @Override
             public void run() {
                 Log.d("Data_abc_list", String.valueOf(listabc_data.size()));
-
-
+                progressBar.setMax(listabc_data.size()-1);
+                Collections.shuffle(listabc_data);
 
                 if(listabc_data.size() != 0){
 //                    progressBar.setVisibility(View.GONE);
@@ -187,7 +191,7 @@ private void  anhxa(){
     imageButton_voice = findViewById(R.id.imageButton_voice);
 
     animationView = findViewById(R.id.animationView);
-//    progressBar = findViewById(R.id.progressBar);
+    progressBar = findViewById(R.id.progressBar);
     switch_hidetext = findViewById(R.id.switch_hidetext);
 
     imageView_url_aw1.setOnClickListener(this);
@@ -201,14 +205,22 @@ private void  anhxa(){
     private void setdulieu(){
         int x = listabc_data.size();
 
-        Random r = new Random();
-        int random =  r.nextInt(x);
+//        Random r = new Random();
+//        int random =  r.nextInt(x);
 
         Random aws = new Random();
         int randomaws = aws.nextInt(4);
 
-        randomAwsImage(randomaws, random);
-
+        if(sttcauhoi <x-1){
+            sttcauhoi++;
+            CurrentProgress++;
+        }
+        else {
+            sttcauhoi =0;
+            CurrentProgress=0;
+        }
+        progressBar.setProgress(sttcauhoi);
+        randomAwsImage(randomaws, sttcauhoi);
 
 //        next(x);
 //        prev(x);
@@ -607,6 +619,7 @@ private void  anhxa(){
         imageButton_voice.setVisibility(View.GONE);
 
         switch_hidetext.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
     }
     private void show_view(){
         imageView_url_aw1.setVisibility(View.VISIBLE);
@@ -619,6 +632,7 @@ private void  anhxa(){
         imageButton_voice.setVisibility(View.VISIBLE);
 
         switch_hidetext.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     //load quảng cáo

@@ -48,6 +48,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class Phatam_Activity extends AppCompatActivity {
@@ -59,6 +60,9 @@ public class Phatam_Activity extends AppCompatActivity {
     ImageButton imageButton_voice;
     TextToSpeech textToSpeech;
 //    ProgressBar progressBar;
+    private int CurrentProgress = 0;
+    private ProgressBar progressBar;
+
     Activity mActivity;
     LottieAnimationView animationView;
     private InterstitialAd mInterstitialAd;
@@ -124,6 +128,7 @@ MediaPlayer mediaPlayer;
 //                Log.d("Data_abc_list", String.valueOf(listabc_data.size()));
 
 
+                progressBar.setMax(listabc_data.size()-1);
                 if(listabc_data.size() != 0){
 //                    progressBar.setVisibility(View.GONE);
                     animationView.setVisibility(View.GONE);
@@ -154,13 +159,15 @@ private void  anhxa(){
    button_next = findViewById(R.id.button_next);
    button_prev = findViewById(R.id.button_prev);
     imageButton_voice = findViewById(R.id.imageButton_voice);
-//    progressBar = findViewById(R.id.progressBar);
+    progressBar = findViewById(R.id.progressBar);
     animationView = findViewById(R.id.animationView);
 }
 
 
     private void setdulieu(){
         int x = listabc_data.size();
+        progressBar.setProgress(check);
+
         new DownloadImageFromInternet((ImageView) findViewById(R.id.imageView_url_abc)).execute(listabc_data.get(0).getUrl());
         textView_abc.setText(listabc_data.get(0).getName());
         textView_abc_vi.setText(listabc_data.get(0).getVi());
@@ -241,6 +248,7 @@ private void  anhxa(){
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(check < x-1){
                     check++;
                     setview(check);
@@ -280,6 +288,7 @@ private void  anhxa(){
 //        textToSpeech.speak(listabc_data.get(i).getName(),TextToSpeech.QUEUE_FLUSH,null,null);
 
         playvoice(listabc_data.get(i).getVoice());
+        progressBar.setProgress(check);
 
     }
     // get url image
@@ -355,6 +364,7 @@ private void  anhxa(){
         button_next.setVisibility(View.GONE);
         button_prev.setVisibility(View.GONE);
         imageButton_voice.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
 
     }
     private void show_view(){
@@ -364,6 +374,7 @@ private void  anhxa(){
         button_next.setVisibility(View.VISIBLE);
         button_prev.setVisibility(View.VISIBLE);
         imageButton_voice.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
     }
 
