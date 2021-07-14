@@ -54,6 +54,9 @@ import java.util.Locale;
 import java.util.Random;
 
 public class Listen_Activity extends AppCompatActivity implements View.OnClickListener {
+    //        ca-app-pub-5964552069889646/1781850064
+    private static final String AD_UNIT_ID = "ca-app-pub-5964552069889646/1781850064";
+
     private DatabaseReference mDatabase;
     ArrayList<abc_data> listabc_data ;
     ImageView imageView_url_aw1,imageView_url_aw2,imageView_url_aw3,imageView_url_aw4;
@@ -644,7 +647,7 @@ private void  anhxa(){
         AdRequest adRequest = new AdRequest.Builder().build();
 //
 //        ca-app-pub-5964552069889646/1538183771
-        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
+        InterstitialAd.load(this,AD_UNIT_ID, adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {

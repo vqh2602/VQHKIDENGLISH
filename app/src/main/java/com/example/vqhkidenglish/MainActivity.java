@@ -19,9 +19,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.vqhkidenglish.adapter.Doc_Adapter;
 import com.example.vqhkidenglish.adapter.Nghe_Adapter;
 import com.example.vqhkidenglish.adapter.Top_Adapter;
 import com.example.vqhkidenglish.adapter.Phatam_Adapter;
+import com.example.vqhkidenglish.model.Doc;
 import com.example.vqhkidenglish.model.Nghe;
 import com.example.vqhkidenglish.model.Top;
 import com.example.vqhkidenglish.model.Phatam;
@@ -48,7 +50,7 @@ import static com.example.vqhkidenglish.R.drawable.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView discountRecyclerView, recentlyViewedRecycler,recently_listen;
+    RecyclerView discountRecyclerView, recentlyViewedRecycler,recently_listen,recently_doc;
 
     Top_Adapter topAdapter;
     List<Top> topList;
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
     Nghe_Adapter nghe_adapter;
     List<Nghe> ngheList;
+
+    Doc_Adapter doc_adapter;
+    List<Doc> docList;
 
     Activity mActivity;
     AdView mAdView;
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         discountRecyclerView = findViewById(R.id.discountedRecycler);
         recentlyViewedRecycler = findViewById(R.id.recently_item);
         recently_listen = findViewById(R.id.recently_menu);
+        recently_doc = findViewById(R.id.recently_doc);
 
         Intent intent = getIntent();
         String userid = intent.getStringExtra("userid");
@@ -180,9 +186,11 @@ public class MainActivity extends AppCompatActivity {
     // adding data to model
     topList = new ArrayList<>();
     topList.add(new Top(1, abc_min));
-    topList.add(new Top(2, abc_min));
-    topList.add(new Top(3, abc_min));
-    topList.add(new Top(4, abc_min));
+    topList.add(new Top(2, pet_min));
+    topList.add(new Top(3, ocean_min));
+    topList.add(new Top(4, animal_min));
+    topList.add(new Top(5, pet_min2));
+
 //        discountedProductsList.add(new DiscountedProducts(5, abc));
 //        discountedProductsList.add(new DiscountedProducts(6, abc));
 
@@ -204,9 +212,17 @@ public class MainActivity extends AppCompatActivity {
     ngheList.add(new Nghe("Wild Animal","động vật hoang dã",  animal));
     ngheList.add(new Nghe("Sea Animal","động vật biển", ocean));
 
+        // adding data to model
+        docList = new ArrayList<>();
+        docList.add(new Doc("Alphabet","bảng chữ cái", abc));
+        docList.add(new Doc("Pet","thú cưng", pet));
+        docList.add(new Doc("Wild Animal","động vật hoang dã",  animal));
+        docList.add(new Doc("Sea Animal","động vật biển", ocean));
+
     setDiscountedRecycler(topList);
     setRecentlyViewedRecycler(phatamList);
     setRecentlyViewedNghe(ngheList);
+    setRecentlyViewedDoc(docList);
 
 }
 
@@ -229,6 +245,13 @@ public class MainActivity extends AppCompatActivity {
         recently_listen.setLayoutManager(layoutManager);
         nghe_adapter = new Nghe_Adapter(this, ngheDataList);
         recently_listen.setAdapter(nghe_adapter);
+    }
+
+    private void setRecentlyViewedDoc(List<Doc> docDataList) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recently_doc.setLayoutManager(layoutManager);
+        doc_adapter = new Doc_Adapter(this, docDataList);
+        recently_doc.setAdapter(doc_adapter);
     }
 
     //onclick menu

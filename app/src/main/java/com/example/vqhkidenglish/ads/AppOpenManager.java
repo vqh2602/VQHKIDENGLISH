@@ -25,7 +25,7 @@ public class AppOpenManager implements Application.ActivityLifecycleCallbacks, L
 
 // ca-app-pub-5964552069889646/7752647458
         private static final String LOG_TAG = "AppOpenManager";
-        private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/3419835294";
+        private static final String AD_UNIT_ID = "ca-app-pub-5964552069889646/7752647458";
         private AppOpenAd appOpenAd = null;
 
         private AppOpenAd.AppOpenAdLoadCallback loadCallback;

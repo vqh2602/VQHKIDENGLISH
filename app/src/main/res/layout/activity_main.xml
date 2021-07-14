@@ -32,7 +32,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
                     ads:adSize="LARGE_BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+                    ads:adUnitId="ca-app-pub-5964552069889646/1538183771">
                 </com.google.android.gms.ads.AdView>
 <!--    ca-app-pub-5964552069889646/1538183771-->
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -58,7 +58,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" >
+                app:layout_constraintTop_toBottomOf="@+id/textView_xu" >
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -82,7 +82,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -95,7 +95,7 @@
                 android:textColor="@android:color/background_dark"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/categoryRecycler" />
+                app:layout_constraintTop_toBottomOf="@+id/recently_item" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recently_menu"
@@ -104,8 +104,29 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Tất Cả Khoá Học Nói"
+                android:textColor="@android:color/background_dark"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recently_menu" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recently_doc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
         </LinearLayout>
     </ScrollView>
 
