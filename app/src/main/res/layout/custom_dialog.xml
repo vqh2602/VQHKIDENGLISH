@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:background="#f4f3f3"
+    android:layout_height="200dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#0085EA"
+
+        >
+
+        <TextView
+            android:layout_width="285dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+      android:gravity="center"
+            android:text="Minimum 10000 points"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_above="@+id/dialog_score_id"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:text="You Have Won.."
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Cool"
+        android:background="@drawable/orange"
+        android:id="@+id/cool_id" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_score_id"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        android:layout_gravity="center"
+        android:text="Points"
+        android:textColor="#0c10e2"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

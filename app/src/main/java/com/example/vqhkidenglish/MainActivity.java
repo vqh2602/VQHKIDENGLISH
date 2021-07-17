@@ -291,6 +291,7 @@ public boolean isConnected() {
         b.setTitle("Không có kết nối mạng");
         b.setMessage("Chưa bật kết nối mạng \n Hãy bật kết wifi, dữ liệu di động sau đó click kết nối lại");
 // Nút Ok
+        b.setCancelable(false);
         b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 mActivity.recreate();
@@ -300,13 +301,18 @@ public boolean isConnected() {
 //Nút Cancel
         b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-//                dialog.cancel();
+                dialog.dismiss();
+                dialog.cancel();
                 finish();
             }
         });
 //Tạo dialog
         AlertDialog al = b.create();
 //Hiển thị
-        al.show();
+        //Hiển thị
+        if(!isFinishing())
+        {
+            al.show();
+        }
     }
 }

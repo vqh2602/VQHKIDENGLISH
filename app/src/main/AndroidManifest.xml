@@ -23,15 +23,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VQHKIDENGLISH"
         tools:ignore="MissingClass">
-
+        <activity android:name=".Spinwheel"></activity>
+        <activity android:name=".Account_activity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5964552069889646~8652270930" />
 
-        <activity android:name=".Doc_Voice_Activity">
-
-        </activity>
+        <activity android:name=".Doc_Voice_Activity"></activity>
         <activity android:name=".Splash_Screen_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,9 +43,7 @@
         <activity android:name=".Listen_Activity" />
         <activity android:name=".Phatam_Activity" />
         <activity android:name=".Login_Activity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

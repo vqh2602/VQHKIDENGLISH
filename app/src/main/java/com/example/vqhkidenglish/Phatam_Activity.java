@@ -53,7 +53,7 @@ import java.util.Locale;
 
 public class Phatam_Activity extends AppCompatActivity {
     //       ca-app-pub-5964552069889646/1781850064
-    private static final String AD_UNIT_ID = "ca-app-pub-5964552069889646/1781850064";
+    private static  String AD_UNIT_ID ="";
 
     private DatabaseReference mDatabase;
     ArrayList<abc_data> listabc_data ;
@@ -77,6 +77,7 @@ MediaPlayer mediaPlayer;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phatam);
         anhxa();
+        AD_UNIT_ID = getString(R.string.Trunggian);
         loadad();
 
         Intent intent = getIntent();
@@ -340,6 +341,7 @@ private void  anhxa(){
         b.setTitle("Không thể tải dữ liệu");
         b.setMessage("Tốc độ mạng không ổn định, bạn có muốn tải lại dữ liệu?");
 // Nút Ok
+        b.setCancelable(false);
         b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 mActivity.recreate();
@@ -349,15 +351,19 @@ private void  anhxa(){
 //Nút Cancel
         b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
-//                dialog.cancel();
+                dialog.dismiss();
+                dialog.cancel();
                 finish();
             }
         });
 //Tạo dialog
         AlertDialog al = b.create();
 //Hiển thị
-        al.show();
+//Hiển thị
+        if(!isFinishing())
+        {
+            al.show();
+        }
     }
     //show
     private void hide_view(){

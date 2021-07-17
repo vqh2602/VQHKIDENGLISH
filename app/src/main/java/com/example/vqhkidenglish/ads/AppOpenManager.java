@@ -15,6 +15,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.example.vqhkidenglish.MyApplication;
+import com.example.vqhkidenglish.R;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -25,7 +26,7 @@ public class AppOpenManager implements Application.ActivityLifecycleCallbacks, L
 
 // ca-app-pub-5964552069889646/7752647458
         private static final String LOG_TAG = "AppOpenManager";
-        private static final String AD_UNIT_ID = "ca-app-pub-5964552069889646/7752647458";
+        private static  String AD_UNIT_ID = "";
         private AppOpenAd appOpenAd = null;
 
         private AppOpenAd.AppOpenAdLoadCallback loadCallback;
@@ -83,6 +84,8 @@ public class AppOpenManager implements Application.ActivityLifecycleCallbacks, L
 
                         };
                 AdRequest request = getAdRequest();
+
+                AD_UNIT_ID = myApplication.getString(R.string.Moungdung);
                 AppOpenAd.load(
                         myApplication, AD_UNIT_ID, request,
                         AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, loadCallback);

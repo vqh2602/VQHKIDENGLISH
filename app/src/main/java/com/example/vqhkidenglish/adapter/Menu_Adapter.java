@@ -7,14 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vqhkidenglish.Account_activity;
 import com.example.vqhkidenglish.R;
 import com.example.vqhkidenglish.exten.Windy_Activity;
 import com.example.vqhkidenglish.model.Menu;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -22,7 +26,7 @@ public class Menu_Adapter extends RecyclerView.Adapter<Menu_Adapter.RecentlyView
 
     Context context;
     List<Menu> menuList;
-
+    private FirebaseAuth mAuth;
     public Menu_Adapter(Context context, List<Menu> ngheList) {
         this.context = context;
         this.menuList = ngheList;
@@ -59,9 +63,20 @@ public class Menu_Adapter extends RecyclerView.Adapter<Menu_Adapter.RecentlyView
 //                context.startActivity(i);
                 switch (position){
                     case 0:
-                        Intent intent = new Intent(context, Windy_Activity.class);
-                        intent.putExtra("idexten","https://vqh2602.github.io/windi.github.io/");
-                        context.startActivity(intent);
+//                        Intent intent = new Intent(context, Windy_Activity.class);
+                        //check đang nhap
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        if(currentUser == null){
+                            Toast.makeText(context,"Bạn chưa đăng nhập",Toast.LENGTH_LONG).show();
+
+                        }
+                        else {
+                            Intent intent = new Intent(context, Account_activity.class);
+                            intent.putExtra("idexten","https://vqh2602.github.io/windi.github.io/");
+                            context.startActivity(intent);
+                        }
+
                         break;
                     case 1:
                         Intent intent1 = new Intent(context,Windy_Activity.class);
@@ -112,7 +127,7 @@ public class Menu_Adapter extends RecyclerView.Adapter<Menu_Adapter.RecentlyView
         public RecentlyViewedViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.product_name);
+            name = itemView.findViewById(R.id.product_day);
             vi = itemView.findViewById(R.id.product_name_vi);
             bg = itemView.findViewById(R.id.recently_layout);
             image = itemView.findViewById(R.id.imageView_icon);

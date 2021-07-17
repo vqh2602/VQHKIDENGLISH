@@ -38,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.vqhkidenglish.data.User;
 import com.example.vqhkidenglish.data.abc_data;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
@@ -48,6 +49,8 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,16 +61,22 @@ import com.muddzdev.styleabletoast.StyleableToast;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
 public class Doc_Voice_Activity extends AppCompatActivity {
     //        ca-app-pub-5964552069889646/1781850064
-    private static final String AD_UNIT_ID = "ca-app-pub-5964552069889646/1781850064";
+    private static String AD_UNIT_ID = "";
 
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabasecheck;
     ArrayList<abc_data> listabc_data ;
     ImageView imageView_url_abc;
     TextView textView_abc,textView_abc_vi;
@@ -89,10 +98,16 @@ RatingBar ratingBar;
 
     String check ="";
     int sttcauhoi=-1;
+
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_voice);
+        AD_UNIT_ID = getString(R.string.Trunggian);
+        //check dang nhap
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         anhxa();
         loadad();
@@ -103,6 +118,7 @@ RatingBar ratingBar;
         listabc_data = new ArrayList<>();
 //        intent.getStringExtra("key")
         mDatabase = FirebaseDatabase.getInstance().getReference(intent.getStringExtra("key"));
+        mDatabasecheck = FirebaseDatabase.getInstance().getReference("users");
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -122,7 +138,45 @@ RatingBar ratingBar;
             }
         });
 
+        mDatabasecheck.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    // TODO: handle the post
+                    User user = postSnapshot.getValue(User.class);
+//                    Log.d("Data_abc_string", abcData.getUrl());
+                    if(currentUser.getUid().equals(user.id)){
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//                                    Calendar c = Calendar.getInstance();
+//                                    c.setTime(sdf.parse(dt));
+//                                    c.add(Calendar.DATE, 1);  // number of days to add
+//                                    dt = sdf.format(c.getTime());
+                        DateFormat dform = new SimpleDateFormat("dd/MM/yyyy");
+                        Date obj = new Date();
+                        String d1 = dform.format(obj);
 
+                        try {
+                            Date date1 = sdf.parse(d1);
+                            Date date2 = sdf.parse(user.date);
+                            if(date2.compareTo(date1) < 0){
+                            thongbao2();
+                            }
+                            else {
+
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                        }
+                }
+
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Log.w("Data", "loadPost:onCancelled", error.toException());
+            }
+        });
 
         hide_view();
 //                setvoice();
@@ -359,6 +413,7 @@ RatingBar ratingBar;
         b.setTitle("Không thể tải dữ liệu");
         b.setMessage("Tốc độ mạng không ổn định, bạn có muốn tải lại dữ liệu?");
 // Nút Ok
+        b.setCancelable(false);
         b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 mActivity.recreate();
@@ -368,15 +423,19 @@ RatingBar ratingBar;
 //Nút Cancel
         b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
-//                dialog.cancel();
+                dialog.dismiss();
+                dialog.cancel();
                 finish();
             }
         });
 //Tạo dialog
         AlertDialog al = b.create();
 //Hiển thị
-        al.show();
+        //Hiển thị
+        if(!isFinishing())
+        {
+            al.show();
+        }
     }
     //show
     private void hide_view(){
@@ -506,14 +565,14 @@ RatingBar ratingBar;
         speechRecognizer.startListening(intent);
 
         animationViewvoice.playAnimation();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                speechRecognizer.stopListening();
-                animationViewvoice.pauseAnimation();
-                animationViewvoice.setFrame(113);
-            }
-        },5000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                speechRecognizer.stopListening();
+//                animationViewvoice.pauseAnimation();
+//                animationViewvoice.setFrame(113);
+//            }
+//        },5000);
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
             public void onReadyForSpeech(Bundle bundle) {
@@ -553,6 +612,8 @@ RatingBar ratingBar;
                             .build();
                     st.show();
                     speechRecognizer.stopListening();
+                                    animationViewvoice.pauseAnimation();
+                animationViewvoice.setFrame(113);
                 }
 
 
@@ -622,4 +683,47 @@ RatingBar ratingBar;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+
+
+    // thông báo
+    private void thongbao2(){
+        //Tạo đối tượng
+        mActivity = Doc_Voice_Activity.this;
+
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+//Thiết lập tiêu đề
+        b.setTitle("Bạn chưa đăng kí dịch vụ");
+        b.setMessage("Đăng kí dịch vụ miễn phí \n Đăng kí tại trang tài khoản");
+// Nút Ok
+        b.setCancelable(false);
+        b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mActivity.recreate();
+                Intent intent = new Intent(Doc_Voice_Activity.this, Menu_Activity.class);
+//        String xu1 = String.valueOf(xu);
+//        intent.putExtra("userxu",xu1);
+                startActivity(intent);
+                overridePendingTransition(R.anim.in_left,R.anim.out_left);
+                dialog.dismiss();
+                finish();
+            }
+        });
+//Nút Cancel
+        b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                finish();
+            }
+        });
+//Tạo dialog
+        AlertDialog al = b.create();
+//Hiển thị
+        if(!isFinishing())
+        {
+            al.show();
+        }
+
+    }
+
 }

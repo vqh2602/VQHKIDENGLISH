@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">Tiếng Anh Cho Bé _ VQHApps</string>
     <string name="title_activity_main_menu">MainActivity</string>
+    <!--   ad test -->
+    <string name="Trunggian">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="Bieungu">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="Moungdung">ca-app-pub-3940256099942544/3419835294</string>
+    <!--   ad gốc -->
+    <!--    <string name="Trunggian">ca-app-pub-5964552069889646/1781850064</string>-->
+    <!--    <string name="Bieungu">ca-app-pub-5964552069889646/1538183771</string>-->
+    <!--    <string name="Moungdung">ca-app-pub-5964552069889646/7752647458</string>-->
+    <string name="kiemxu">
+        Mỗi lần gia hạn dịch vụ cần \n
+        <b>1000 xu cho 1 ngày</b> \n
+        <b>6000 xu cho 7 ngày</b> \n
+        <b>24000 xu cho 30 ngày</b> \n
+        Bạn có thể kiếm xu miễn phí ở vòng quay \n</string>
+
 </resources>

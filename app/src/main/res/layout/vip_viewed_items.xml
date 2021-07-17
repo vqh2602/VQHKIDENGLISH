@@ -5,41 +5,43 @@
     android:id="@+id/recently_layout"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@drawable/cv1">
+    android:background="@drawable/ac1">
 
     <ImageView
         android:id="@+id/imageView_icon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="48dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="44dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002"
+        app:layout_constraintVertical_bias="0.32"
         app:srcCompat="@drawable/button_bg" />
 
     <TextView
         android:id="@+id/product_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="sans-serif-black"
         android:text="product_name"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/product_name_vi"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_icon"
         app:layout_constraintStart_toEndOf="@+id/imageView_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imageView_icon" />
 
     <TextView
-        android:id="@+id/product_name_vi"
+        android:id="@+id/textView_gia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/product_day"
-        app:layout_constraintTop_toBottomOf="@+id/product_day" />
+        android:layout_marginEnd="48dp"
+        android:text="2000 xu"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/product_day"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/product_day"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

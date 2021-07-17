@@ -32,7 +32,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
                     ads:adSize="LARGE_BANNER"
-                    ads:adUnitId="ca-app-pub-5964552069889646/1538183771">
+                    ads:adUnitId="@string/Bieungu">
                 </com.google.android.gms.ads.AdView>
 <!--    ca-app-pub-5964552069889646/1538183771-->
             </androidx.constraintlayout.widget.ConstraintLayout>

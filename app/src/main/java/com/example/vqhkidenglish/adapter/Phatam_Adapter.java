@@ -100,7 +100,7 @@ public class Phatam_Adapter extends RecyclerView.Adapter<Phatam_Adapter.Recently
         public RecentlyViewedViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.product_name);
+            name = itemView.findViewById(R.id.product_day);
             vi = itemView.findViewById(R.id.product_name_vi);
             bg = itemView.findViewById(R.id.recently_layout);
 

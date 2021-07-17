@@ -12,10 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vqhkidenglish.Doc_Voice_Activity;
-import com.example.vqhkidenglish.Phatam_Activity;
 import com.example.vqhkidenglish.R;
 import com.example.vqhkidenglish.model.Doc;
-import com.example.vqhkidenglish.model.Phatam;
 
 import java.util.List;
 
@@ -101,7 +99,7 @@ public class Doc_Adapter extends RecyclerView.Adapter<Doc_Adapter.RecentlyViewed
         public RecentlyViewedViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.product_name);
+            name = itemView.findViewById(R.id.product_day);
             vi = itemView.findViewById(R.id.product_name_vi);
             bg = itemView.findViewById(R.id.recently_layout);
 
