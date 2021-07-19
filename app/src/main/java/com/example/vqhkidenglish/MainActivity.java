@@ -23,6 +23,7 @@ import com.example.vqhkidenglish.adapter.Doc_Adapter;
 import com.example.vqhkidenglish.adapter.Nghe_Adapter;
 import com.example.vqhkidenglish.adapter.Top_Adapter;
 import com.example.vqhkidenglish.adapter.Phatam_Adapter;
+import com.example.vqhkidenglish.data.User;
 import com.example.vqhkidenglish.model.Doc;
 import com.example.vqhkidenglish.model.Nghe;
 import com.example.vqhkidenglish.model.Top;
@@ -36,12 +37,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
 //    int checkuser = 0;
 //    int xu =0;
     String useremail ="",userimage="",username ="";
-
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    int check=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         mAdView.loadAd(adRequest);
 
-
+//check đang nhap
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
         discountRecyclerView = findViewById(R.id.discountedRecycler);
         recentlyViewedRecycler = findViewById(R.id.recently_item);
@@ -125,7 +143,31 @@ public class MainActivity extends AppCompatActivity {
             thongbao();
         }
 
+
+  if(currentUser == null){
+
+  }else {
+      checkuser(currentUser);
+      new Handler().postDelayed(new Runnable() {
+          @Override
+          public void run() {
+              if(check == 0){
+                  DateFormat dform = new SimpleDateFormat("dd/MM/yyyy");
+                  Date obj = new Date();
+
+
+                  adduser(currentUser.getUid(),currentUser.getDisplayName(),currentUser.getEmail(),0, String.valueOf(dform.format(obj)));
+              }
+              else {
+
+              }
+
+          }
+      },5000);
+  }
     }
+
+
 
 //// check user
 //    private void checkuser(String userid){
@@ -314,5 +356,46 @@ public boolean isConnected() {
         {
             al.show();
         }
+    }
+
+
+
+    private void adduser(String userId, String name, String email, int xu, String date){
+        User user = new User(name, email,xu,userId,date);
+        mDatabase.child(userId).setValue(user);
+    }
+
+    private void checkuser(FirebaseUser currentUser){
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    // TODO: handle the post
+                    User user = postSnapshot.getValue(User.class);
+//                    Log.d("Data_abc_string", abcData.getUrl());
+                    Log.d("USER1", String.valueOf(user.xu) + currentUser.getUid() + "|"+user.id);
+                    Log.d("USER1", String.valueOf(currentUser.getUid().equals(user.id)));
+                    if(currentUser.getUid().equals(user.id) ){
+                        check=1;
+//                        textView_xu.setText(String.valueOf("Xu: "+user.xu));
+                        Log.d("USER", String.valueOf(user.xu));
+                        break;
+                    }
+                    else {
+                        check =0;
+                        Log.d("USER", "erro");
+                    }
+//                    Log.d("Data_abc_list", String.valueOf(listabc_data.size()));
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Log.w("Data", "loadPost:onCancelled", error.toException());
+            }
+        });
     }
 }

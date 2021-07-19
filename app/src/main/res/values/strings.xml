@@ -15,5 +15,13 @@
         <b>6000 xu cho 7 ngày</b> \n
         <b>24000 xu cho 30 ngày</b> \n
         Bạn có thể kiếm xu miễn phí ở vòng quay \n</string>
+<string name="aboutapp">Ứng dụng là một sản phẩm nhỏ của tớ trong quá trình học tập và
+    phát triển hướng tới mục đích cộng đồng. Tuy nhiên trong quá trình phát triển ứng dụng
+còn có một số vấn đề, lỗi vặt. Và mình vẫn cố gắng sửa chữa và khắc phục. Cảm ơn bạn đã sử dụng ứng dụng này!.</string>
+    <string name="phienban"><u>Phiên bản: </u></string>
+    <string name="trogiup"><u>Trợ giúp</u></string>
+    <string name="chinhsachbaomat"><u>Chính sách bảo mật</u></string>
+    <string name="dieukhoan"><u>Điều khoản và điều kiện</u></string>
+    <string name="website"><u>Website nhà phát triển</u></string>
 
 </resources>

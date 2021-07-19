@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vqhkidenglish.About_Activity;
 import com.example.vqhkidenglish.Account_activity;
 import com.example.vqhkidenglish.R;
 import com.example.vqhkidenglish.exten.Windy_Activity;
@@ -102,6 +103,11 @@ public class Menu_Adapter extends RecyclerView.Adapter<Menu_Adapter.RecentlyView
                         Intent intent5 = new Intent(context,Windy_Activity.class);
                         intent5.putExtra("idexten","https://vqh2602.github.io/tower_game/");
                         context.startActivity(intent5);
+//
+                        break;
+                    case 6:
+                        Intent intent6 = new Intent(context, About_Activity.class);
+                        context.startActivity(intent6);
 //
                         break;
                     default:

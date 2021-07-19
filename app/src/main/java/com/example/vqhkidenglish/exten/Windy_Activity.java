@@ -2,9 +2,12 @@ package com.example.vqhkidenglish.exten;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -38,6 +41,7 @@ public class Windy_Activity extends AppCompatActivity {
         webview_map.getSettings().setAppCacheEnabled(true);
         webview_map.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         webview_map.loadUrl(idexten);
+
         webview_map.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress < 100) {
@@ -47,7 +51,14 @@ public class Windy_Activity extends AppCompatActivity {
                 }
                 if (progress == 100) {
                     progressDialog.dismiss();
+
                 }
+
+            }
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                request.grant(request.getResources());
             }
         });
 

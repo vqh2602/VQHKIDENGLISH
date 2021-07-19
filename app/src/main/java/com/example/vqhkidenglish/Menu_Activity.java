@@ -130,24 +130,24 @@ public class Menu_Activity extends AppCompatActivity {
 //            textView_xu.setText(String.valueOf("Xu: "+"xin chờ 10s ..."));
             new Menu_Activity.DownloadImageFromInternet((ImageView) findViewById(R.id.imageView_user)).execute(currentUser.getPhotoUrl().toString());
 
-//add user
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(check == 0){
-                        DateFormat dform = new SimpleDateFormat("dd/MM/yyyy");
-                        Date obj = new Date();
-
-
-                        adduser(currentUser.getUid(),currentUser.getDisplayName(),currentUser.getEmail(),0, String.valueOf(dform.format(obj)));
-                    }
-                    else {
-
-                    }
-
-
-                }
-            },5000);
+////add user
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if(check == 0){
+//                        DateFormat dform = new SimpleDateFormat("dd/MM/yyyy");
+//                        Date obj = new Date();
+//
+//
+//                        adduser(currentUser.getUid(),currentUser.getDisplayName(),currentUser.getEmail(),0, String.valueOf(dform.format(obj)));
+//                    }
+//                    else {
+//
+//                    }
+//
+//
+//                }
+//            },5000);
         }
 
 

@@ -111,6 +111,16 @@ RatingBar ratingBar;
 
         anhxa();
         loadad();
+        hide_view();
+
+        if(currentUser==null){
+            thongbaodangnhap();
+        }
+        else {
+
+
+
+
 
         Intent intent = getIntent();
 
@@ -178,7 +188,7 @@ RatingBar ratingBar;
             }
         });
 
-        hide_view();
+
 //                setvoice();
 
         new Handler().postDelayed(new Runnable() {
@@ -223,7 +233,7 @@ RatingBar ratingBar;
                 });
     }
 
-
+    }
 
 
     private void  anhxa(){
@@ -695,6 +705,46 @@ RatingBar ratingBar;
 //Thiết lập tiêu đề
         b.setTitle("Bạn chưa đăng kí dịch vụ");
         b.setMessage("Đăng kí dịch vụ miễn phí \n Đăng kí tại trang tài khoản");
+// Nút Ok
+        b.setCancelable(false);
+        b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mActivity.recreate();
+                Intent intent = new Intent(Doc_Voice_Activity.this, Menu_Activity.class);
+//        String xu1 = String.valueOf(xu);
+//        intent.putExtra("userxu",xu1);
+                startActivity(intent);
+                overridePendingTransition(R.anim.in_left,R.anim.out_left);
+                dialog.dismiss();
+                finish();
+            }
+        });
+//Nút Cancel
+        b.setNegativeButton("Không đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                finish();
+            }
+        });
+//Tạo dialog
+        AlertDialog al = b.create();
+//Hiển thị
+        if(!isFinishing())
+        {
+            al.show();
+        }
+
+    }
+
+    // thông báo
+    private void thongbaodangnhap(){
+        //Tạo đối tượng
+        mActivity = Doc_Voice_Activity.this;
+
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+//Thiết lập tiêu đề
+        b.setTitle("Bạn chưa đăng nhập");
+        b.setMessage("Khoá học này cần phải đăng nhập để truy cập \n Đăng nhập tại trang tài khoản");
 // Nút Ok
         b.setCancelable(false);
         b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
